@@ -10,6 +10,11 @@ public class KMeansAutomatico extends PixelManager {
 	PixelKmeans _matriz[][];
 	PixelKmeans _centroides [];
 	
+	static int NCARACT = 3; // R , G , B
+	
+	// soma de cada caracteristica
+	double _caracSum[][];
+	int _caracElements[];
 	
 	public KMeansAutomatico(BufferedImage i) {
 		super(i);
@@ -18,14 +23,14 @@ public class KMeansAutomatico extends PixelManager {
 		
 
 		_outImg = new BufferedImage( w, h, _img.getType() );
-		
 		_matriz = new PixelKmeans[ w ][ h ];
 	}
 
 	public void setK( int novo ) {
 		_k = novo;
-		
 		_centroides = new PixelKmeans [_k];
+		_caracSum = new double[_k][NCARACT];
+		_caracElements = new int[_k];
 	}
 	
 	public void geraCentroides() {
@@ -35,44 +40,47 @@ public class KMeansAutomatico extends PixelManager {
 		int rx, ry;
 		
 		// gera k centróides
-		int x = 0;
-		for ( x=0; x < _k; x++ ) {
+		
+		for ( int i=0; i<_k; i++ ) {
 			rx = rand.nextInt( totX ) + 1;
 			ry = rand.nextInt( totY ) + 1;
-			
-			PixelKmeans tmp = new PixelKmeans( _pix );
-			tmp._centroide = tmp;
+		
+			PixelKmeans tmp = _matriz[ rx ][ ry ];
+			_centroides[ i ] = tmp;
+			tmp._k = i;
 			tmp._distancia = 0;
-			tmp._k = x;
-			_centroides [x] = tmp;
-			_matriz [rx][ry] = _centroides [x];
+			tmp._centroide = tmp;
 		}
 	}
+
+	public int getDistance( PixelKmeans p1, PixelKmeans p2 ) {
+
+		int dif = 0;
+		for( int cor=0; cor<3; cor++ ) {
+			int cor1 = p1._rgb[ cor ];
+			int cor2 = p2._rgb[ cor ];
+			dif += Math.abs( cor1 - cor2 );
+		}
+		return dif;
+	}
 	
-	public void execute() {
-		geraCentroides();
-		super.execute();
-		
+	public void calculeTodasDistancias() {
+		PixelKmeans atual;
+		int dist = 0;
 		for( int y=0; y<_img.getHeight(); y++ ) {
 			for( int x=0; x<_img.getWidth(); x++ ) {
-				PixelKmeans atual = _matriz[x][y];
+				atual = _matriz[x][y];
 				
-				double dist = -1;
 				for( int i=0; i<_k; i++ ) {
+					// pega cada um dos centroides...
 					PixelKmeans c = _centroides[ i ];
 
-					double dtmp = 0;
-					for( int cor=0; cor<3; cor++ ) {
-						int cor1 = c._rgb[ cor ];
-						int cor2 = atual._rgb[ cor ];
-						int dif = cor1 - cor2;
-						dtmp += Math.pow( dif, 2 );
-					}
+					// calcula a distancia baseado em uma formula da literatura...
+					dist = getDistance( c, atual );
 
-					if( dtmp < dist ){
-						dist = dtmp;
+					if( dist < atual._distancia ) {
+						atual._distancia = dist;
 						atual._centroide = c;
-						atual._distancia = (int)dist;
 						atual._k = i;
 					}
 				}
@@ -81,11 +89,49 @@ public class KMeansAutomatico extends PixelManager {
 		
 	}
 	
+	public void rodaKMeans() {
+		/* aqui tem q somar todos R de um mesmo grupo e dividir pelo número 
+		 * de elementos
+		 */
+		PixelKmeans atual;
+		for( int y=0; y<_img.getHeight(); y++ ) {
+			for( int x=0; x<_img.getWidth(); x++ ) {
+				atual = _matriz[x][y];
+				_caracElements[ atual._k ]++;
+				for( int cor=0; cor<NCARACT; cor++ ) {
+					_caracSum[ atual._k ][ cor ] = atual._rgb[ cor ];
+				}
+			}
+		}
+		for( int cor=0; cor<NCARACT; cor++ ) {
+			parei aqui....
+			deixei com erro de proposito
+			apagar estas linhas e continuar
+			AQUI PRECISA ACHAR A MÉDIA DE: R, G, e B
+			E VERIFICAR SE EXISTE ALGUM PONTO COM ESSES R, G, B
+			caso não exista, refazer o calculo das distancias com base nele.
+			será que pode um CENTRÓIDE conter R, G e B, que não é um ponto válido??
+		}
+		
+	}
+	
+	public void execute() {
+		// carrega todos pixels em estruturas...
+		super.execute();
+		geraCentroides();
+
+		calculeTodasDistancias();
+		
+		rodaKMeans();
+		
+	}
+	
 	public void pixelLoop(int x, int y) {
+		PixelKmeans tmp;
 		if( _matriz[x][y] != null )
 			return;
 
-		PixelKmeans tmp = new PixelKmeans( _pix );
+		tmp = new PixelKmeans( _pix, x, y );
 		_matriz[x][y] = tmp;
 	}
 
