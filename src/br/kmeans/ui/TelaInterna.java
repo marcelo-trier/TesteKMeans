@@ -1,9 +1,12 @@
 package br.kmeans.ui;
 
 import java.awt.BorderLayout;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JInternalFrame;
+import javax.swing.JOptionPane;
 
 
 public class TelaInterna extends JInternalFrame {
@@ -42,6 +45,8 @@ public class TelaInterna extends JInternalFrame {
 		panel = new ImagePanel( img );
 		getContentPane().add(panel, BorderLayout.CENTER);
 		contadorJanela++;
+		
+		
 	}
 	
 	public TelaInterna( String titulo, BufferedImage img ) {
@@ -52,5 +57,6 @@ public class TelaInterna extends JInternalFrame {
 	public BufferedImage getImage() {
 		return imagem;
 	}
+
 	
 }
