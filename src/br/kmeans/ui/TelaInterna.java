@@ -32,13 +32,16 @@ public class TelaInterna extends JInternalFrame {
 		oTitulo += titulo;
 		this.setTitle( oTitulo );
 		id = contadorJanela;
-		contadorJanela++;
-		setBounds(100, 100, 430, 260);
+		int cantoX = 0, cantoY = 0;
+		cantoX = 50 * id;
+		cantoY = 50 * id;
+		setBounds(cantoX, cantoY, img.getWidth(), img.getHeight() );
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		
 		imagem = img;
 		panel = new ImagePanel( img );
 		getContentPane().add(panel, BorderLayout.CENTER);
+		contadorJanela++;
 	}
 	
 	public TelaInterna( String titulo, BufferedImage img ) {

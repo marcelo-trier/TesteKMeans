@@ -167,7 +167,7 @@ public class KMeansAutomatico extends PixelManager {
 			float diff = Math.abs( somaAtual - somaOld );
 
 			// se algum dos centroides tiver uma diferenca de XX ainda não terminou
-			if( diff > 3 )
+			if( diff > 1 )
 				return false;
 		}
 		

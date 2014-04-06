@@ -37,7 +37,7 @@ public class JanelaPrincipal extends JFrame {
 	public void clickKmeansAutomatico() {
 		long inicio = System.currentTimeMillis();
 		KMeansAutomatico kma = new KMeansAutomatico( getImage() );
-		kma.setK( 4 );
+		kma.setK( 3 );
 		kma.init();
 		int conta = 0;
 		while( ! kma.fimExecucao() ) {
