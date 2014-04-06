@@ -21,7 +21,7 @@ public abstract class PixelManager {
 	}
 	
 	
-	public void execute() {
+	public void percorraTodosPixels() {
 		int w = _img.getWidth();
 		int h = _img.getHeight();
 

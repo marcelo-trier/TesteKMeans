@@ -35,16 +35,33 @@ public class JanelaPrincipal extends JFrame {
 
 
 	public void clickKmeansAutomatico() {
+		long inicio = System.currentTimeMillis();
 		KMeansAutomatico kma = new KMeansAutomatico( getImage() );
 		kma.setK( 4 );
-		kma.execute();
-		mostraImagem( kma.getImage() );
+		kma.init();
+		int conta = 0;
+		while( ! kma.fimExecucao() ) {
+			conta++;
+			kma.execute();
+		}
+		long fim = System.currentTimeMillis();
+		float tempo = fim - inicio;
+		tempo = ( float )tempo / 1000;
+		String msg = "demora: " + ( fim - inicio ) + "ms  |  ";
+		msg = String.format("demora: %.02f seg  |  interações: %d", tempo, conta );
+		
+		mostraImagem( msg, kma.getImage() );
+	}
+	
+	public void mostraImagem( String titulo, BufferedImage imgOut ) {
+		TelaInterna interno = new TelaInterna( titulo, imgOut );
+		contentPane.add( interno );
+		interno.setVisible( true );	
+		
 	}
 	
 	public void mostraImagem( BufferedImage imgOut ) {
-		TelaInterna interno = new TelaInterna( imgOut );
-		contentPane.add( interno );
-		interno.setVisible( true );	
+		mostraImagem( "", imgOut );
 	}
 
 	public BufferedImage getImage() {
