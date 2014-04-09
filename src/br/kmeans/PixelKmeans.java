@@ -1,7 +1,7 @@
 package br.kmeans;
 
 public class PixelKmeans {
-	boolean normalizePixels = true;
+	public static boolean normalizePixels = true;
 	
 	float[] _rgb;
 	float _distancia = 999999999;
@@ -13,7 +13,11 @@ public class PixelKmeans {
 		_rgb = new float[ 3 ];
 		for( int i=0; i<3; i++ ) {
 			int valor = pix[ i ];
-			float f = ( float )valor / 256;
+			float f;
+			if( normalizePixels )
+				f = ( float )valor / 256;
+			else
+				f = ( float )valor;
 			_rgb[i] = ( float )f; // rbg normalizadoooo
 		}
 		_x = x;

@@ -57,7 +57,7 @@ public class ImagePanel extends JPanel implements MouseListener {
     
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub		
 		pontoX = e.getX();
 		pontoY = e.getY();
 		drawPoint( pontoX, pontoY );

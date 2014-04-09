@@ -31,6 +31,7 @@ public class TelaInterna extends JInternalFrame {
 	public TelaInterna(BufferedImage img ) {
 		super( "", true, true, true, true );
 		initTela( "", img);
+		
 		/*super( "Janela: " + contadorJanela, true, true, true, true );
 		id = contadorJanela;
 		contadorJanela++;

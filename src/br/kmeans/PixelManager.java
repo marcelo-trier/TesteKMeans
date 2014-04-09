@@ -43,6 +43,6 @@ public abstract class PixelManager {
 	public abstract void pixelLoop( int x, int y );
 	public abstract void init();
 	public abstract void execute();
-	public abstract void geraImagem();
-	public abstract BufferedImage getImage();
+//	public abstract void geraImagem();
+//	public abstract BufferedImage getImage();
 }

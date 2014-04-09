@@ -50,10 +50,18 @@ public class JanelaPrincipal extends JFrame {
 	public void click1PtoExecute() {
 
 		TelaInterna ti = ( TelaInterna )contentPane.getSelectedFrame();
-		//KMeans1Pto k1p = new KMeans1Pto( ti.getX(), ti.getY() );
-		KMeans1Pto k1p = new KMeans1Pto( getImage(), ti.getX(), ti.getY() );
+		long inicio = System.currentTimeMillis();
+		KMeans1Pto k1p = new KMeans1Pto( getImage(), ti.pontoX(), ti.pontoY() );
 		k1p.init();
 		k1p.execute();
+		BufferedImage out = k1p.geraImagem();
+
+		long fim = System.currentTimeMillis();
+		float tempo = fim - inicio;
+		tempo = ( float )tempo / 1000;
+		String msg = String.format("demora: %.02f seg", tempo );
+		
+		mostraImagem( msg, out );
 	}
 	
 	
