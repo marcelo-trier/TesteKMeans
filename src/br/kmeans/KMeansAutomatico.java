@@ -31,6 +31,7 @@ public class KMeansAutomatico extends PixelManager {
 
 		_outImg = new BufferedImage( w, h, _img.getType() );
 		_matriz = new PixelKmeans[ w ][ h ];
+		PixelKmeans.normalizePixels = true;
 	}
 
 	public void setK( int novo ) {

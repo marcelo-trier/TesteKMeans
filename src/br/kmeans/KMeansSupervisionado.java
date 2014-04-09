@@ -11,10 +11,24 @@ public class KMeansSupervisionado extends PixelManager {
 	BufferedImage _outImg;
 	static final int NCARAC = 3; // R G B
 	static final int NCENTR = 4;
-	static final int NPONTOS = 30; // pontos do supervisionado
+	//static final int NPONTOS = 20; // pontos do supervisionado
+	static final int NPONTOS = 5; // pontos do supervisionado
 	PixelKmeans _centroide[] = { null, null, null, null };
 	
-	Point arrayPontos[][];
+	int[][] apX = {
+			{ 192, 278, 375, 530, 533 },
+			{ 433, 207, 117, 60 , 27  },
+			{ 523, 444, 525, 350, 286 },
+			{ 39 , 145, 239, 126, 119 },
+	};
+
+	int[][] apY = {
+			{ 8  , 8  , 9  , 34 , 54  },
+			{ 176, 52 , 12 , 107, 135 },
+			{ 186, 203, 237, 263, 290},
+			{ 268, 309, 336, 340, 298}
+	};
+	/*
 	int[][] apX = {
 			{ 192, 278, 375, 530, 533, 533, 532, 534, 532, 534, 465, 281, 279, 368, 418, 477, 405, 405, 405, 405 },
 			{ 192, 278, 375, 530, 533, 533, 532, 534, 532, 534, 465, 281, 279, 368, 418, 477, 405, 405, 405, 405 },
@@ -27,7 +41,7 @@ public class KMeansSupervisionado extends PixelManager {
 			{ 8  , 8  , 9  , 34 , 54 , 75 , 97 , 124, 150, 176, 157, 119, 49 , 68 , 73 , 83 , 35 , 75 , 115, 145 },
 			{ 8  , 8  , 9  , 34 , 54 , 75 , 97 , 124, 150, 176, 157, 119, 49 , 68 , 73 , 83 , 35 , 75 , 115, 145 },
 			{ 8  , 8  , 9  , 34 , 54 , 75 , 97 , 124, 150, 176, 157, 119, 49 , 68 , 73 , 83 , 35 , 75 , 115, 145 },
-	};
+	}; */
 	
 	//int[] ap0X = { 192, 278, 375, 530, 533, 533, 532, 534, 532, 534, 465, 281, 279, 368, 418, 477, 405, 405, 405, 405 };
 
@@ -39,9 +53,7 @@ public class KMeansSupervisionado extends PixelManager {
 
 		_outImg = new BufferedImage( _img.getWidth(), _img.getHeight(), _img.getType() );
 		_matriz = new PixelKmeans[ _img.getWidth() ][ _img.getHeight() ];
-		
-		arrayPontos = new Point[ NCENTR ][ NPONTOS ];
-		
+		PixelKmeans.normalizePixels = false;
 	}
 
 	public void pixelLoop(int x, int y) {
