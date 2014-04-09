@@ -1,6 +1,7 @@
 package br.kmeans.ui;
 
 import java.awt.BorderLayout;
+import java.awt.Cursor;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
@@ -15,6 +16,17 @@ public class TelaInterna extends JInternalFrame {
 	private ImagePanel panel;
 	public BufferedImage imagem = null;
 	
+	public int pontoX() {
+		return panel.pontoX;
+	}
+	
+	public int pontoY() {
+		return panel.pontoY;
+	}
+	
+	public void registraPonto() {
+		panel.pegaPonto();
+	}
 	
 	public TelaInterna(BufferedImage img ) {
 		super( "", true, true, true, true );
@@ -58,5 +70,4 @@ public class TelaInterna extends JInternalFrame {
 		return imagem;
 	}
 
-	
 }

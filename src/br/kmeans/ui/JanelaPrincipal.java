@@ -2,6 +2,7 @@ package br.kmeans.ui;
 
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.EventQueue;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -26,6 +27,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.border.EmptyBorder;
 
+import br.kmeans.KMeans1Pto;
 import br.kmeans.KMeansAutomatico;
 
 
@@ -33,7 +35,28 @@ public class JanelaPrincipal extends JFrame {
 
 	private JDesktopPane contentPane;
 
+	public void click1Pto() {
+		TelaInterna ti = ( TelaInterna )contentPane.getSelectedFrame();
+		ti.registraPonto();
+/*
+		KMeans1Pto k1p = new KMeans1Pto( x, y );
+		if( !k1p.getPoint() )
+			return;
+		k1p.init();
+		k1p.execute();
+		*/
+	}
+	
+	public void click1PtoExecute() {
 
+		TelaInterna ti = ( TelaInterna )contentPane.getSelectedFrame();
+		//KMeans1Pto k1p = new KMeans1Pto( ti.getX(), ti.getY() );
+		KMeans1Pto k1p = new KMeans1Pto( getImage(), ti.getX(), ti.getY() );
+		k1p.init();
+		k1p.execute();
+	}
+	
+	
 	public void clickKmeansAutomatico() {
 		long inicio = System.currentTimeMillis();
 		KMeansAutomatico kma = new KMeansAutomatico( getImage() );
@@ -154,11 +177,24 @@ public class JanelaPrincipal extends JFrame {
 		});
 		mnProcessamento.add(mntmKmeansAutomtico);
 		
-		JMenuItem mntmKmeansSupervisionado = new JMenuItem("KMeans semi-Superv");
-		mnProcessamento.add(mntmKmeansSupervisionado);
+		JMenu mnKmeanspto = new JMenu("KMeans 1Pto");
+		mnProcessamento.add(mnKmeanspto);
 		
-		JMenuItem mntmKmeans = new JMenuItem("KMeans Supervisionado");
-		mnProcessamento.add(mntmKmeans);
+		JMenuItem mntmConfig = new JMenuItem("Marque ponto...");
+		mntmConfig.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				click1Pto();
+			}
+		});
+		mnKmeanspto.add(mntmConfig);
+		
+		JMenuItem mntmRoda = new JMenuItem("Roda...");
+		mntmRoda.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				click1PtoExecute();
+			}
+		});
+		mnKmeanspto.add(mntmRoda);
 		contentPane = new JDesktopPane();
 		contentPane.setDragMode(JDesktopPane.LIVE_DRAG_MODE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
