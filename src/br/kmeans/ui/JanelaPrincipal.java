@@ -29,12 +29,21 @@ import javax.swing.border.EmptyBorder;
 
 import br.kmeans.KMeans1Pto;
 import br.kmeans.KMeansAutomatico;
+import br.kmeans.KMeansSupervisionado;
 
 
 public class JanelaPrincipal extends JFrame {
 
 	private JDesktopPane contentPane;
 
+	public void clickKMeansSup() {
+		KMeansSupervisionado kms = new KMeansSupervisionado( getImage() );
+		kms.init();
+		kms.execute();
+		BufferedImage out = kms.geraImagem();
+		this.mostraImagem( out );
+	}
+	
 	public void click1Pto() {
 		TelaInterna ti = ( TelaInterna )contentPane.getSelectedFrame();
 		ti.registraPonto();
@@ -203,6 +212,14 @@ public class JanelaPrincipal extends JFrame {
 			}
 		});
 		mnKmeanspto.add(mntmRoda);
+		
+		JMenuItem mntmKmeansSuperv = new JMenuItem("KMeans Superv");
+		mntmKmeansSuperv.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				clickKMeansSup();
+			}
+		});
+		mnProcessamento.add(mntmKmeansSuperv);
 		contentPane = new JDesktopPane();
 		contentPane.setDragMode(JDesktopPane.LIVE_DRAG_MODE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

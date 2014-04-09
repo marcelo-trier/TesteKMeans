@@ -13,7 +13,7 @@ public class KMeans1Pto extends PixelManager {
 	PixelKmeans[] _centroide = { null, null };
 	PixelKmeans _matriz[][];
 	static final int NCARACT = 3; // R , G , B
-	static final float THRESHOLD = 0.3f; // porcentagem do peso da caracteristica! vixi!
+	static final float THRESHOLD = 0.2f; // porcentagem do peso da caracteristica! vixi!
 	float[] _thresholdValues = new float[ NCARACT ];
 	
 	BufferedImage _outImg;
